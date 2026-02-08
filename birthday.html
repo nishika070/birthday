@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For My Favorite People 💖</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fff5f8 0%, #ffe4f0 100%);
+      font-family: 'Georgia', serif;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* COUNTDOWN SECTION */
+    .countdown-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      width: 100%;
+      transition: opacity 0.8s, visibility 0.8s;
+    }
+
+    .countdown-section.hidden {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+    }
+
+    .countdown-title {
+      color: #c2185b;
+      font-size: 3em;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(194, 24, 91, 0.1);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .countdown-timer {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .time-box {
+      background: white;
+      border-radius: 15px;
+      padding: 30px 20px;
+      box-shadow: 0 8px 25px rgba(194, 24, 91, 0.15);
+      min-width: 100px;
+      transition: transform 0.3s;
+    }
+
+    .time-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .time-number {
+      font-size: 2.5em;
+      color: #ff4d6d;
+      font-weight: bold;
+      display: block;
+    }
+
+    .time-label {
+      color: #c2185b;
+      font-size: 0.9em;
+      margin-top: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .countdown-message {
+      font-size: 1.3em;
+      color: #c2185b;
+      margin-top: 30px;
+      font-style: italic;
+    }
+
+    .heart-animation {
+      display: inline-block;
+      margin: 0 5px;
+      animation: heartbeat 1.2s infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+    /* LETTERS SECTION */
+    .letters-section {
+      display: none;
+      animation: fadeIn 0.8s ease-in;
+      min-height: 100vh;
+      padding: 40px 20px;
+      width: 100%;
+    }
+
+    .letters-section.visible {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .surprise-title {
+      color: #c2185b;
+      font-size: 2.5em;
+      margin-bottom: 50px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .letters-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .letter-card {
+      cursor: pointer;
+      perspective: 1000px;
+    }
+
+    .envelope {
+      background: linear-gradient(135deg, #ff4d6d 0%, #ff6b8a 100%);
+      height: 180px;
+      width: 100%;
+      position: relative;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(194, 24, 91, 0.2);
+      transition: all 0.4s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3em;
+      color: white;
+    }
+
+    .letter-card:hover .envelope {
+      transform: scale(1.08);
+      box-shadow: 0 12px 35px rgba(194, 24, 91, 0.3);
+    }
+
+    .letter-label {
+      color: #c2185b;
+      margin-top: 15px;
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+
+    .letter-content {
+      display: none;
+      background: white;
+      padding: 30px;
+      margin-top: 20px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      line-height: 1.8;
+      color: #333;
+      font-size: 1.05em;
+    }
+
+    /* Different opening animations */
+    .letter-content.open-1 {
+      display: block;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .letter-content.open-2 {
+      display: block;
+      animation: fadeInScale 0.6s ease-out;
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .letter-content.open-3 {
+      display: block;
+      animation: bounceIn 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes bounceIn {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .letter-content.open-4 {
+      display: block;
+      animation: rotateIn 0.6s ease-out;
+    }
+
+    @keyframes rotateIn {
+      from {
+        opacity: 0;
+        transform: rotateX(90deg);
+      }
+      to {
+        opacity: 1;
+        transform: rotateX(0deg);
+      }
+    }
+
+    .letter-content.open {
+      display: block;
+    }
+
+    .letter-content.close {
+      animation: fadeOut 0.3s ease-out forwards;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- COUNTDOWN SECTION -->
+<div class="countdown-section" id="countdownSection">
+  <h1 class="countdown-title">Get Ready For Something Special! ✨</h1>
+  
+  <div class="countdown-timer">
+    <div class="time-box">
+      <span class="time-number" id="days">00</span>
+      <span class="time-label">Days</span>
+    </div>
+    <div class="time-box">
+      <span class="time-number" id="hours">00</span>
+      <span class="time-label">Hours</span>
+    </div>
+    <div class="time-box">
+      <span class="time-number" id="minutes">00</span>
+      <span class="time-label">Minutes</span>
+    </div>
+    <div class="time-box">
+      <span class="time-number" id="seconds">00</span>
+      <span class="time-label">Seconds</span>
+    </div>
+  </div>
+
+  <p class="countdown-message">
+    <span class="heart-animation">💖</span>
+    The best is coming soon...
+    <span class="heart-animation">💖</span>
+  </p>
+</div>
+
+<!-- LETTERS SECTION -->
+<div class="letters-section" id="lettersSection">
+  <h1 class="surprise-title">Open When You Need 💌</h1>
+
+  <div class="letters-container">
+    <!-- Letter 1 -->
+    <div class="letter-card" onclick="toggleLetter(1)">
+      <div class="envelope">💌</div>
+      <p class="letter-label">Letter 1</p>
+      <div id="letter1" class="letter-content">
+        <strong>You are the best human ever.</strong><br><br>
+        Never forget that you bring so much joy and light to everyone around you. Your kindness, laughter, and presence make the world a better place. 💖<br><br>
+        I'm so glad I know you.
+      </div>
+    </div>
+
+    <!-- Letter 2 -->
+    <div class="letter-card" onclick="toggleLetter(2)">
+      <div class="envelope">💝</div>
+      <p class="letter-label">Letter 2</p>
+      <div id="letter2" class="letter-content">
+        <strong>I am always here for you.</strong><br><br>
+        No matter what happens, no matter how tough things get, remember that you're not alone. I've got your back always. You can count on me for anything - the big stuff, the small stuff, everything in between. 🎀
+      </div>
+    </div>
+
+    <!-- Letter 3 -->
+    <div class="letter-card" onclick="toggleLetter(3)">
+      <div class="envelope">💕</div>
+      <p class="letter-label">Letter 3</p>
+      <div id="letter3" class="letter-content">
+        <strong>You deserve all the good things.</strong><br><br>
+        Be kind to yourself the way you're kind to others. Celebrate your wins, learn from your losses, and keep pushing forward. You're stronger than you think, braver than you believe, and more capable than you've ever imagined. ✨
+      </div>
+    </div>
+
+    <!-- Letter 4 -->
+    <div class="letter-card" onclick="toggleLetter(4)">
+      <div class="envelope">💗</div>
+      <p class="letter-label">Letter 4</p>
+      <div id="letter4" class="letter-content">
+        <strong>Thank you for being you.</strong><br><br>
+        Thank you for the memories we've shared, the laughs we've had, and all the moments that made me feel grateful to have you in my life. You matter more than you'll ever know. Keep shining bright! 🌟💖
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // COUNTDOWN TIMER
+  function startCountdown() {
+    // Set your birthday date here (format: "YYYY-MM-DD" or adjust as needed)
+    // Currently set to 10 seconds from now for demo purposes
+    const targetDate = new Date().getTime() + 10 * 1000;
+
+    const countdownInterval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        clearInterval(countdownInterval);
+        revealLetters();
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = String(days).padStart(2, '0');
+      document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+      document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+    }, 1000);
+  }
+
+  function revealLetters() {
+    const countdownSection = document.getElementById("countdownSection");
+    const lettersSection = document.getElementById("lettersSection");
+
+    countdownSection.classList.add("hidden");
+    lettersSection.classList.add("visible");
+  }
+
+  // LETTER TOGGLE
+  function toggleLetter(num) {
+    const letter = document.getElementById("letter" + num);
+    
+    if (letter.classList.contains("open")) {
+      letter.classList.remove("open");
+      letter.classList.add("close");
+      setTimeout(() => {
+        letter.classList.remove("close");
+        letter.classList.remove("open-1");
+        letter.classList.remove("open-2");
+        letter.classList.remove("open-3");
+        letter.classList.remove("open-4");
+      }, 300);
+    } else {
+      letter.classList.add("open");
+      letter.classList.add("open-" + num);
+    }
+  }
+
+  // Start countdown on page load
+  window.addEventListener('load', startCountdown);
+</script>
+
+</body>
+</html>
